@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis Interaktif: 5 Kekuatan Photoshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .interactive-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .interactive-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .active-btn {
+            transform: translateY(1px);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .quiz-option.correct {
+            background-color: #a7f3d0; /* green-200 */
+            border-color: #34d399; /* green-400 */
+        }
+        .quiz-option.incorrect {
+            background-color: #fecaca; /* red-200 */
+            border-color: #f87171; /* red-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Chosen Palette: Energetic & Playful -->
+    <!-- Application Structure Plan: Infografis ini disusun sebagai panduan visual satu halaman. Dimulai dengan judul yang menarik, diikuti oleh grid 2 kolom yang responsif. Setiap 'kartu' dalam grid mewakili satu 'Kekuatan Super' (topik ahli dari Jigsaw), mengisolasi konsep agar mudah dicerna. Struktur ini dipilih untuk memecah informasi kompleks menjadi bagian-bagian kecil yang visual dan mandiri, sangat cocok untuk audiens siswa yang belajar konsep baru. Alur pengguna adalah linier secara vertikal, mendorong penemuan setiap konsep secara berurutan. -->
+    <!-- Visualization & Content Choices: 1. Peralatan Seleksi -> Goal: Compare -> Viz: Bar Chart -> Interaction: Buttons to filter data -> Justification: Interaksi memungkinkan siswa fokus pada satu alat, memperkuat perbandingan. -> Library: Chart.js - NO SVG. 2. Layer & Blending Mode -> Goal: Inform -> Viz: Live Demo with CSS mix-blend-mode -> Interaction: Dropdown to change mode -> Justification: Demonstrasi langsung jauh lebih efektif daripada chart statis. -> Method: HTML/CSS/JS - NO SVG/Mermaid. 3. Peralatan Retouching -> Goal: Compare -> Viz: Dynamic Quiz Module -> Interaction: Answering 20 questions -> Justification: A comprehensive quiz reinforces learning across all topics in an engaging way. -> Method: HTML/JS - NO SVG. 4. Adjustment Layers -> Goal: Compare -> Viz: Interactive slider -> Interaction: Slider changes explanatory text -> Justification: Menghubungkan konsep abstrak (fleksibilitas) dengan aksi nyata. -> Method: HTML/JS - NO SVG. 5. Tipografi -> Goal: Organize -> Viz: Live typography editor -> Interaction: Controls to change font, size, color -> Justification: Memberikan pengalaman langsung dalam mengontrol atribut teks. -> Method: HTML/JS - NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Membongkar 5 Kekuatan Super</h1>
+            <p class="text-lg md:text-xl text-[#FF6363]">di Adobe Photoshop untuk Desainer Pemula</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="lg:col-span-1 bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-2xl font-bold mb-4 text-[#FF6363]">1. Seni Seleksi (Interaktif)</h2>
+                <p class="mb-4 flex-grow">Klik tombol di bawah untuk fokus pada keunggulan setiap alat seleksi pada grafik.</p>
+                <div class="chart-container mb-4">
+                    <canvas id="selectionChart"></canvas>
+                </div>
+                <div class="flex justify-center space-x-2">
+                    <button id="marqueeBtn" class="interactive-btn text-xs px-3 py-1 bg-red-100 text-red-800 rounded-full">Marquee</button>
+                    <button id="lassoBtn" class="interactive-btn text-xs px-3 py-1 bg-red-100 text-red-800 rounded-full">Lasso</button>
+                    <button id="wandBtn" class="interactive-btn text-xs px-3 py-1 bg-red-100 text-red-800 rounded-full">Magic Wand</button>
+                    <button id="resetBtn" class="interactive-btn text-xs px-3 py-1 bg-gray-200 text-gray-800 rounded-full">Reset</button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-2xl font-bold mb-4 text-[#FFC107]">2. Sihir Blending Mode (Interaktif)</h2>
+                <p class="mb-4">Pilih Blending Mode dari dropdown untuk melihat efeknya secara langsung pada warna di bawah.</p>
+                <div class="relative h-48 w-full rounded-lg bg-blue-400 flex items-center justify-center mb-4">
+                    <div id="blend-top-layer" class="absolute h-32 w-32 rounded-full bg-yellow-400 flex items-center justify-center font-bold text-white text-lg" style="mix-blend-mode: normal;">
+                        ATAS
+                    </div>
+                    <span class="font-bold text-white text-lg">BAWAH</span>
+                </div>
+                <select id="blendModeSelect" class="w-full p-2 border border-gray-300 rounded-lg">
+                    <option value="normal">Normal</option>
+                    <option value="multiply">Multiply (Menggelapkan)</option>
+                    <option value="screen">Screen (Mencerahkan)</option>
+                    <option value="overlay">Overlay (Kontras)</option>
+                    <option value="difference">Difference</option>
+                </select>
+            </div>
+
+            <div class="lg:col-span-1 md:col-span-2 bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-2xl font-bold mb-4 text-[#03A9F4]">3. Uji Pengetahuan Photoshop</h2>
+                <div id="quiz-container" class="flex flex-col flex-grow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold">Kuis Cepat</h3>
+                        <p id="progress-text" class="text-sm font-medium text-gray-600">Soal 1/20</p>
+                    </div>
+                    <p id="question-text" class="text-lg mb-4 flex-grow">Memuat pertanyaan...</p>
+                    <div id="options-container" class="space-y-3 mb-4">
+                    </div>
+                    <button id="next-btn" class="interactive-btn w-full p-2 bg-blue-500 text-white rounded-lg hidden">Lanjut</button>
+                </div>
+                <div id="results-container" class="hidden text-center">
+                    <h3 class="text-2xl font-bold mb-2">Kuis Selesai!</h3>
+                    <p class="text-lg mb-4">Skor Anda:</p>
+                    <p id="score-text" class="text-5xl font-bold text-blue-500 mb-6">10/20</p>
+                    <button id="restart-btn" class="interactive-btn w-full p-2 bg-blue-500 text-white rounded-lg">Ulangi Kuis</button>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-2xl font-bold mb-4 text-[#4CAF50]">4. Pengubah Suasana (Interaktif)</h2>
+                <p class="mb-4">Geser slider untuk memahami tingkat fleksibilitas antara metode editing.</p>
+                <div class="flex flex-col items-center">
+                    <input id="flexibilitySlider" type="range" min="0" max="100" value="50" class="w-full md:w-2/3">
+                    <div class="flex justify-between w-full md:w-2/3 text-sm mt-2">
+                        <span>💥 Destruktif</span>
+                        <span>🛡️ Non-Destruktif</span>
+                    </div>
+                    <div id="flexibilityText" class="mt-4 p-4 bg-green-50 rounded-lg w-full text-center">
+                        <h4 class="font-bold">Di Tengah</h4>
+                        <p>Pilih metode yang sesuai dengan kebutuhan. Untuk fleksibilitas maksimal, selalu utamakan Adjustment Layers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-md p-6 flex flex-col">
+                 <h2 class="text-2xl font-bold mb-4 text-[#9C27B0]">5. Suara Desain (Interaktif)</h2>
+                <p class="mb-4">Coba ubah tampilan teks di bawah ini menggunakan kontrol yang tersedia!</p>
+                <div class="bg-purple-50 p-6 rounded-lg flex justify-center items-center h-48 mb-6">
+                    <span id="interactiveText" class="text-5xl md:text-7xl font-bold text-[#9C27B0]" style="font-family: 'Impact', sans-serif;">DISKON 50%</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="fontSelector" class="font-semibold block mb-1">Jenis Font:</label>
+                        <select id="fontSelector" class="w-full p-2 border border-gray-300 rounded-lg">
+                            <option value="Impact, sans-serif">Impact</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sizeSlider" class="font-semibold block mb-1">Ukuran: <span id="sizeValue">60</span>px</label>
+                        <input id="sizeSlider" type="range" min="24" max="96" value="60" class="w-full">
+                    </div>
+                     <div>
+                        <label class="font-semibold block mb-1">Warna:</label>
+                        <div class="flex space-x-2">
+                            <button class="w-8 h-8 rounded-full bg-[#9C27B0]" onclick="changeTextColor('#9C27B0')"></button>
+                            <button class="w-8 h-8 rounded-full bg-[#FF6363]" onclick="changeTextColor('#FF6363')"></button>
+                            <button class="w-8 h-8 rounded-full bg-[#03A9F4]" onclick="changeTextColor('#03A9F4')"></button>
+                            <button class="w-8 h-8 rounded-full bg-gray-800" onclick="changeTextColor('#2d3748')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+<script>
+    // --- Chart Interactivity ---
+    const selectionCtx = document.getElementById('selectionChart').getContext('2d');
+    const initialData = {
+        labels: ['Marquee Tool', 'Lasso Tool', ['Magic Wand', 'Tool']],
+        datasets: [{
+            label: 'Ideal untuk Bentuk',
+            data: [70, 85, 95],
+            backgroundColor: ['#FF6363', '#FF8C8C', '#FFB3B3'],
+        }]
+    };
+    const selectionChart = new Chart(selectionCtx, {
+        type: 'bar',
+        data: JSON.parse(JSON.stringify(initialData)), // Deep copy
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: (tooltipItems) => {
+                            let label = tooltipItems[0].chart.data.labels[tooltipItems[0].dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        },
+                        label: function(context) {
+                            let value = context.parsed.y;
+                            if (value > 90) return 'Sangat spesifik (berbasis warna)';
+                            if (value > 80) return 'Bentuk bebas (manual)';
+                            return 'Bentuk geometris dasar';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const updateChart = (toolIndex) => {
+        const newData = initialData.datasets[0].data.map((_, index) => index === toolIndex ? initialData.datasets[0].data[index] : 0);
+        selectionChart.data.datasets[0].data = newData;
+        selectionChart.update();
+    };
+    
+    document.getElementById('marqueeBtn').addEventListener('click', () => updateChart(0));
+    document.getElementById('lassoBtn').addEventListener('click', () => updateChart(1));
+    document.getElementById('wandBtn').addEventListener('click', () => updateChart(2));
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        selectionChart.data.datasets[0].data = initialData.datasets[0].data;
+        selectionChart.update();
+    });
+
+    // --- Blending Mode Interactivity ---
+    const blendLayer = document.getElementById('blend-top-layer');
+    const blendSelector = document.getElementById('blendModeSelect');
+    blendSelector.addEventListener('change', (event) => {
+        blendLayer.style.mixBlendMode = event.target.value;
+    });
+
+    // --- QUIZ MODULE ---
+    const quizData = [
+        { topic: "Seleksi", question: "Alat seleksi mana yang paling cocok untuk memilih objek berbentuk kotak atau lingkaran sempurna?", options: ["Lasso Tool", "Marquee Tool", "Magic Wand Tool", "Quick Selection Tool"], answer: "Marquee Tool" },
+        { topic: "Seleksi", question: "Untuk menyeleksi area dengan bentuk bebas seperti menggambar dengan pensil, Anda menggunakan...", options: ["Rectangular Marquee", "Polygonal Lasso", "Lasso Tool", "Magnetic Lasso"], answer: "Lasso Tool" },
+        { topic: "Seleksi", question: "Magic Wand Tool bekerja dengan menyeleksi area berdasarkan...", options: ["Bentuk geometris", "Kontras pinggiran", "Kemiripan warna piksel", "Ukuran objek"], answer: "Kemiripan warna piksel" },
+        { topic: "Seleksi", question: "Shortcut keyboard untuk membatalkan seleksi (deselect) adalah...", options: ["Ctrl+A", "Ctrl+X", "Ctrl+D", "Ctrl+Z"], answer: "Ctrl+D" },
+        { topic: "Layer & Blending", question: "Apa fungsi utama dari 'Layers' di Photoshop?", options: ["Menyimpan file", "Mengatur elemen secara terpisah", "Memberi filter", "Mengubah ukuran kanvas"], answer: "Mengatur elemen secara terpisah" },
+        { topic: "Layer & Blending", question: "Blending mode 'Multiply' akan menghasilkan warna yang...", options: ["Lebih terang", "Lebih gelap", "Inversi", "Abu-abu"], answer: "Lebih gelap" },
+        { topic: "Layer & Blending", question: "Blending mode 'Screen' memiliki efek yang berlawanan dengan...", options: ["Overlay", "Soft Light", "Multiply", "Difference"], answer: "Multiply" },
+        { topic: "Layer & Blending", question: "Untuk mengatur tingkat transparansi sebuah layer, Anda mengubah nilai...", options: ["Fill", "Opacity", "Flow", "Blending"], answer: "Opacity" },
+        { topic: "Retouching", question: "Alat yang paling cepat untuk menghilangkan jerawat atau noda kecil pada foto adalah...", options: ["Clone Stamp Tool", "Patch Tool", "Spot Healing Brush Tool", "Eraser Tool"], answer: "Spot Healing Brush Tool" },
+        { topic: "Retouching", question: "Clone Stamp Tool (S) bekerja dengan cara...", options: ["Menghapus piksel", "Mengisi dengan warna foreground", "Menduplikasi piksel dari area lain", "Memperhalus tekstur"], answer: "Menduplikasi piksel dari area lain" },
+        { topic: "Retouching", question: "Untuk memperbaiki area yang lebih besar dengan menyalin tekstur dari area lain, alat yang cocok adalah...", options: ["Healing Brush", "Patch Tool", "Blur Tool", "Dodge Tool"], answer: "Patch Tool" },
+        { topic: "Retouching", question: "Tombol keyboard yang ditekan untuk menentukan sumber (source) saat menggunakan Clone Stamp adalah...", options: ["Ctrl", "Shift", "Alt", "Tab"], answer: "Alt" },
+        { topic: "Adjustment Layers", question: "Mengapa menggunakan Adjustment Layers lebih disarankan daripada Image > Adjustments?", options: ["Karena lebih cepat", "Karena bersifat non-destruktif", "Karena memiliki lebih banyak pilihan", "Karena membuat file lebih kecil"], answer: "Karena bersifat non-destruktif" },
+        { topic: "Adjustment Layers", question: "Adjustment layer yang digunakan untuk mengubah semua warna menjadi hitam putih adalah...", options: ["Brightness/Contrast", "Hue/Saturation", "Black & White", "Photo Filter"], answer: "Black & White" },
+        { topic: "Adjustment Layers", question: "Untuk mengontrol tingkat kecerahan dan kegelapan pada gambar, Anda menggunakan...", options: ["Levels atau Curves", "Color Balance", "Vibrance", "Invert"], answer: "Levels atau Curves" },
+        { topic: "Adjustment Layers", question: "Fungsi 'Layer Mask' pada Adjustment Layer adalah...", options: ["Menghapus layer", "Membatasi area efek adjustment", "Menggabungkan layer", "Menduplikasi layer"], answer: "Membatasi area efek adjustment" },
+        { topic: "Tipografi", question: "Panel utama untuk mengatur jenis font, ukuran, dan spasi antar huruf adalah...", options: ["Layers Panel", "History Panel", "Character Panel", "Paths Panel"], answer: "Character Panel" },
+        { topic: "Tipografi", question: "Istilah untuk spasi antar dua huruf spesifik dalam tipografi disebut...", options: ["Tracking", "Leading", "Kerning", "Baseline"], answer: "Kerning" },
+        { topic: "Tipografi", question: "Untuk mengubah teks menjadi bentuk (shape) agar bisa dimodifikasi lebih bebas, Anda perlu...", options: ["Merasterize teks", "Mengonversi ke Smart Object", "Mengonversi ke Shape", "Mem-filter teks"], answer: "Mengonversi ke Shape" },
+        { topic: "Tipografi", question: "'Leading' (diucapkan 'ledding') dalam tipografi mengacu pada...", options: ["Spasi antar baris teks", "Spasi antar semua huruf", "Ketebalan huruf", "Kemiringan huruf"], answer: "Spasi antar baris teks" }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const quizContainer = document.getElementById('quiz-container');
+    const resultsContainer = document.getElementById('results-container');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const progressText = document.getElementById('progress-text');
+    const nextBtn = document.getElementById('next-btn');
+    const scoreText = document.getElementById('score-text');
+    const restartBtn = document.getElementById('restart-btn');
+
+    function loadQuiz() {
+        const currentQuiz = quizData[currentQuestionIndex];
+        questionText.textContent = currentQuiz.question;
+        progressText.textContent = `Soal ${currentQuestionIndex + 1}/${quizData.length}`;
+        optionsContainer.innerHTML = '';
+        
+        currentQuiz.options.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.className = 'quiz-option interactive-btn w-full text-left p-3 bg-blue-50 hover:bg-blue-100 rounded-lg border border-transparent';
+            button.onclick = () => selectAnswer(button, option, currentQuiz.answer);
+            optionsContainer.appendChild(button);
+        });
+
+        nextBtn.classList.add('hidden');
+    }
+
+    function selectAnswer(button, selectedOption, correctAnswer) {
+        const buttons = optionsContainer.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.disabled = true; // Disable all buttons
+            if (btn.textContent === correctAnswer) {
+                btn.classList.add('correct');
+            } else if (btn === button) {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        if (selectedOption === correctAnswer) {
+            score++;
+        }
+        
+        nextBtn.classList.remove('hidden');
+    }
+
+    function showResults() {
+        quizContainer.classList.add('hidden');
+        resultsContainer.classList.remove('hidden');
+        scoreText.textContent = `${score}/${quizData.length}`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuiz();
+        } else {
+            showResults();
+        }
+    });
+    
+    restartBtn.addEventListener('click', () => {
+        currentQuestionIndex = 0;
+        score = 0;
+        resultsContainer.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        loadQuiz();
+    });
+
+    // Initial load
+    loadQuiz();
+
+
+    // --- Flexibility Slider ---
+    const slider = document.getElementById('flexibilitySlider');
+    const sliderTextContainer = document.getElementById('flexibilityText');
+    slider.addEventListener('input', (event) => {
+        const value = parseInt(event.target.value);
+        let title, text, color;
+        if (value < 20) {
+            title = 'Editing Destruktif';
+            text = 'Perubahan langsung ke piksel asli. Sulit untuk diubah kembali.';
+            color = 'red';
+        } else if (value > 80) {
+            title = 'Editing Non-Destruktif';
+            text = 'Menggunakan Adjustment Layers. Sangat fleksibel dan aman, gambar asli tidak berubah.';
+            color = 'green';
+        } else {
+            title = 'Di Antara Keduanya';
+            text = 'Beberapa teknik bisa semi-destruktif. Selalu utamakan metode yang paling fleksibel.';
+            color = 'yellow';
+        }
+        sliderTextContainer.innerHTML = `<h4 class="font-bold">${title}</h4><p>${text}</p>`;
+        sliderTextContainer.className = `mt-4 p-4 bg-${color}-50 rounded-lg w-full text-center`;
+    });
+
+    // --- Typography Interactivity ---
+    const interactiveText = document.getElementById('interactiveText');
+    const fontSelector = document.getElementById('fontSelector');
+    const sizeSlider = document.getElementById('sizeSlider');
+    const sizeValue = document.getElementById('sizeValue');
+
+    fontSelector.addEventListener('change', (e) => {
+        interactiveText.style.fontFamily = e.target.value;
+    });
+
+    sizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value;
+        interactiveText.style.fontSize = `${newSize}px`;
+        sizeValue.textContent = newSize;
+    });
+
+    function changeTextColor(color) {
+        interactiveText.style.color = color;
+    }
+
+</script>
+
+</body>
+</html>
+
